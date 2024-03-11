@@ -1,21 +1,23 @@
 local cmake = vim.env.VIM_CMAKE or "cmake"
 
 return {
-    "nvim-telescope/telescope.nvim", branch = "0.1.x",
-    event = 'VimEnter',
-    dependencies = {
-        "nvim-lua/plenary.nvim",
-        {
-            "nvim-telescope/telescope-fzf-native.nvim",
+	"nvim-telescope/telescope.nvim",
+	branch = "0.1.x",
+	event = "VimEnter",
+	dependencies = {
+		{
+			"nvim-telescope/telescope-fzf-native.nvim",
+            -- stylua: ignore
             build = cmake .. " -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && " .. cmake .. " --build build --config Release && " .. cmake .. " --install build --prefix build",
-            enabled = vim.fn.executable(cmake) == 1,
-        },
-    },
-    config = function()
-        require("telescope").load_extension("fzf")
-    end,
+			enabled = vim.fn.executable(cmake) == 1,
+		},
+	},
+	config = function()
+		require("telescope").load_extension("fzf")
+	end,
+    -- stylua: ignore
     keys = {
-        {"<leader>/", function() require("telescope.builtin").current_buffer_fuzzy_find() end, desc = "[/] Fuzzily find in current buffer"},
+        {"<leader>/", function() require("telescope.builtin").current_buffer_fuzzy_find() end, desc = "Fuzzily find in current buffer"},
         {"<leader>ff", function() require("telescope.builtin").find_files() end, desc = "[F]ind [F]ile"},
         {"<leader>fg", function() require("telescope.builtin").git_files() end, desc = "[F]ind [G]it file"},
         {"<leader>fo", function() require("telescope.builtin").oldfiles() end, desc = "[F]ind recently [O]pened file"},
